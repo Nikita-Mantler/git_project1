@@ -1,0 +1,37 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include <cmath>
+#include <sstream>
+#include <string>
+using namespace std;
+ 
+int main()
+{
+  string b;
+  int a, c, h = 0, num = 0, lol = 0;
+  string ans;
+  cin >> a >> b >> c;
+  for(int i = b.size()-1; ~i; --i) {
+    if (isdigit(b[i])){
+      h = b[i]-48;
+    }
+    else {
+      h = b[i] - 'A' + 10;
+  }
+    num = num + h * pow(a, lol++);
+  }
+  cout << num<<endl;
+  while (abs(num)) {
+    int g = num % c;
+    if (g < 10){
+      ans = to_string(g) + ans;
+    }
+    else {
+      ans = char(g+55) + ans;
+    }
+
+    num /= c;
+  }
+  cout << ans;
+  return 0;
+}
