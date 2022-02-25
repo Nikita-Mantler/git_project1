@@ -2,24 +2,32 @@
 #include <cmath>
 #include <sstream>
 #include <string>
-
+using namespace std;
  
 int main()
 {
-  int i, c = 0;
-  std :: string b;
-  std :: cin >> i;
-  std :: cout << i << "=";
-  while (abs(i) > 0) {
-    if (i % 10 != 0){
-      b = std :: to_string(abs(i) % 10) + "*10^" + std :: to_string(c) + b;
-      if (i>0) b = "+"+b;
-      else b = "-"+b;
-    }
+  int f, i, c = 0;
+  string b;
+  cin >> i;
+  cout << i << "=";
+  f = i;
+  while (f){
+    f = f/10;
     c++;
-    i = i / 10;
   }
-  std :: cout << b;
+  f = i;
+  c--;
+  while (abs(f) > 0) {
+    if (f % 10 != 0){
+      if (i>0) {
+        cout <<"+"<< int(i/(pow(10, c)))%10<<"*10^"<<c--;
+      }
+      else{
+        cout <<"-"<< i/c<<"*10^"<<c--;
+      }
+    }
+    f = f / 10;
+  }
   return 0;
 
 }
