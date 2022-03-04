@@ -18,9 +18,12 @@ int main()
   f = i;
   c--;
   while (abs(f) > 0) {
-    if (f % 10 != 0){
+    if  (i / ((int)pow(10, c)) % 10 == 0){
+      c--;  
+    }
+    else{
       if (i>0) {
-        cout <<"+"<< int(i/(pow(10, c)))%10<<"*10^"<<c--;
+        cout <<"+"<< int(i/(pow(10, c)))%10<<"*10^"<< c--;
       }
       else{
         cout << int(i/(pow(10, c)))%10<<"*10^"<<c--;
