@@ -13,7 +13,7 @@ int main()
   cin >> a >> b >> c;
   for(int i = b.size()-1; ~i; --i) {
     if (isdigit(b[i])){
-      h = b[i]-48;
+      h = b[i]-'0';
     }
     else {
       h = b[i] - 'A' + 10;
@@ -27,7 +27,7 @@ int main()
       ans = to_string(g) + ans;
     }
     else {
-      ans = char(g+55) + ans;
+      ans = char(g+'A'-10) + ans;
     }
 
     num /= c;
