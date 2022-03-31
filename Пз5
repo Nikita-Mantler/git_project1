@@ -1,0 +1,31 @@
+#include<string>
+#include<iostream>
+#include<stack>
+#include <cstdio>
+#include <math.h>
+
+using namespace std;
+
+int main(){
+  int b, i, z, chek = 0, count = 0;
+  cin >> b;
+  if (b > 0){
+    cout << 2 <<" ";
+    count+=1;
+  }
+  for (i = 1; i <= 1000000; i++){
+    chek=0;
+    if (count == b){
+      break;
+    }
+    for (z = 1; z<=int(sqrt(i))+1; z++){
+      if (i % z == 0){
+        chek+=1;
+      }
+    }
+    if (chek==1 and i != 1){
+      cout << i << " ";
+      count+=1;
+    }
+  }
+}
