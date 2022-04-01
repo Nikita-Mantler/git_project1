@@ -3,29 +3,35 @@
 #include<stack>
 #include <cstdio>
 #include <math.h>
+#include <vector>
 
 using namespace std;
 
 int main(){
   int b, i, z, chek = 0, count = 0;
   cin >> b;
+  vector <int> v1;
   if (b > 0){
-    cout << 2 <<" ";
-    count+=1;
+    v1.push_back(2);
+    cout << 2 << " ";
   }
-  for (i = 1; i <= 1000000; i++){
+  for (i = 3; i <= b*b; i+=2){
     chek=0;
-    if (count == b){
+    for (int z : v1){
+      if (i % z == 0) {
+        chek++;
+      } 
+      if (chek>0) break;
+    }
+    if (v1.size() == b){
       break;
     }
-    for (z = 1; z<=int(sqrt(i))+1; z++){
-      if (i % z == 0){
-        chek+=1;
-      }
-    }
-    if (chek==1 and i != 1){
+    if (chek==0){
+      v1.push_back(i);
       cout << i << " ";
-      count+=1;
+    }
+    if (v1.size() == b){
+      break;
     }
   }
 }
