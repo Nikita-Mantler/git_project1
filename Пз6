@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <ctime>
-#include <cstdlib>
+
 
 using namespace std;
 
@@ -9,7 +8,7 @@ void filling(vector<int>& arr, int N) {
   int max, min;
   cin >> min >> max;
 	for (int i = 0; i < N; ++i) {
-		arr.push_back(static_cast<int>(rand() % max +min));
+		arr.push_back(static_cast<int>(rand() % (max-min+1) +min));
     cout << arr[i] << " ";
 	}
 	cout << endl;
