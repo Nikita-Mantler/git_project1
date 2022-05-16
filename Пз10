@@ -4,13 +4,9 @@
 #include <iostream>
 using namespace std;
 
-// ПЗ 10. Работа со структурой и данными с ней
 
-// Добавть бинарное дерево
-
-/// <summary>
 /// Элемент дерева
-/// </summary>
+
 struct Node
 {
     int val;                                        // значение
@@ -20,26 +16,23 @@ struct Node
     Node(int _val) : val(_val), greater(nullptr), less(nullptr) {}    // конструктор
 };
 
-/// <summary>
+
 /// Бинарное дерево
-/// </summary>
+
 struct list
 {
     Node* first;                                    // Первый элемент
 
     list() : first(nullptr) {}                      // Конструктор
 
-    /// <summary>
+
     /// Пустой ли список
-    /// </summary>
-    /// <returns></returns>
     bool isEmpty() {
         return first == nullptr;
     }
 
-    /// <summary>
+
     /// Добавляет элемент в дерево
-    /// </summary>
     /// <param name="val">Значение элемента</param>
     void Insert(int val) {
         Node* p = new Node(val);                    // Новый элемент
