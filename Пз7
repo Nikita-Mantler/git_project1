@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+struct Dots
+{
+	float x[4];
+	float y[4];
+};
+
+int main()
+{
+	struct Dots dots;
+	for (int i = 0; i < 4; i++)										
+	{
+		cout << "Type x" << i + 1 << " : ";
+		cin >> dots.x[i];
+
+		cout << "Type y" << i + 1 << " : ";
+		cin >> dots.y[i];
+		cout << endl;
+	}
+
+	float X = (((dots.y[1] - dots.y[0]) * dots.x[0] / (dots.x[1] - dots.x[0]) -
+		(dots.y[3] - dots.y[2]) * dots.x[2] / (dots.x[3] - dots.x[2]) + dots.y[2] - dots.y[0]) /
+		((dots.y[1] - dots.y[0]) / (dots.x[1] - dots.x[0]) - (dots.y[3] - dots.y[2]) / (dots.x[3] - dots.x[2])));
+
+	float Y = (dots.y[1] - dots.y[0]) * (X - dots.x[0]) / (dots.x[1] - dots.x[0]) + dots.y[0];
+
+	if (X > min(dots.x[0], dots.x[1]) && X < max(dots.x[0], dots.x[1]))							
+	{
+		if (X > min(dots.x[2], dots.x[3]) && X < max(dots.x[2], dots.x[3]))		
+		{
+			cout << "Intersection point X : " << X << " Y : " << Y;						
+			return 0;															
+		}
+	}
+	cout << "Lines not intersect";										
+}
