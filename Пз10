@@ -1,0 +1,190 @@
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+// ПЗ 10. Работа со структурой и данными с ней
+
+// Добавть бинарное дерево
+
+/// <summary>
+/// Элемент дерева
+/// </summary>
+struct Node
+{
+    int val;                                        // значение
+    Node* greater;                                  // ссылка на больший элемент
+    Node* less;                                     // ссылка на меньший элемент
+
+    Node(int _val) : val(_val), greater(nullptr), less(nullptr) {}    // конструктор
+};
+
+/// <summary>
+/// Бинарное дерево
+/// </summary>
+struct list
+{
+    Node* first;                                    // Первый элемент
+
+    list() : first(nullptr) {}                      // Конструктор
+
+    /// <summary>
+    /// Пустой ли список
+    /// </summary>
+    /// <returns></returns>
+    bool isEmpty() {
+        return first == nullptr;
+    }
+
+    /// <summary>
+    /// Добавляет элемент в дерево
+    /// </summary>
+    /// <param name="val">Значение элемента</param>
+    void Insert(int val) {
+        Node* p = new Node(val);                    // Новый элемент
+
+        if (isEmpty())                              // Если дерево пустое
+        {
+            first = p;                              // Назначеаем первый элемент
+            return;
+        }
+
+        Node* tmp = first;                          // Элемент, с которым будем сравнивать
+        while (true)
+        {
+            if (p->val >= tmp->val)                 // Если нужно сдвинуться по дереву вправо
+            {
+                if (tmp->greater == nullptr)        // Если там пусто
+                {
+                    tmp->greater = p;               // Ставим наш элемент туда
+                    break;
+                }
+                tmp = tmp->greater;                 // А если нет, сдвигаемся на этот элемент
+            }
+            else                                    // Если нужно сдвинуться по дереву влево
+            {
+                if (tmp->less == nullptr)           // И там пусто
+                {
+                    tmp->less = p;                  // Ставим элемент туда
+                    break;
+                }
+                tmp = tmp->less;                    // А если нет, сдвигаемся на этот элемент 
+            }
+        }
+    }
+
+    /// <summary>
+    /// Получить максимальный элемент дерева и удалить его
+    /// </summary>
+    /// <returns>Максимальный элемнт дерева</returns>
+    int Extract() {
+        int answer = 0;                             // Ответ
+        Node* prev = first;                         // Предыдущий элемент
+        Node* tmp = first;                          // Текущий элемент
+
+        if (tmp->greater == nullptr)                // Если это максимальный элемент дерева
+        {
+            answer = tmp->val;                      // Записываем ответ
+            tmp = tmp->less;                        // Ставим на его место меньший элемент
+            first = tmp;                            // И говорим что это первый элемент
+            
+            return answer;                          // Возвращаем ответ
+        }
+
+        while (tmp->greater != nullptr)             // Пока элемнт не макимальный
+        {
+            prev = tmp;                             // Сохраняем текущий элемент
+            tmp = tmp->greater;                     // Берем больший элемент
+        }
+
+        
+        
+        answer = tmp->val;                          // В ответ записываем значение максимального элемнта
+        tmp = tmp->less;                            // На его мето ставим меньший элемнт (если он есть)
+        prev->greater = tmp;                        // Ставим указатель на меньший элемент (теперь он больший)
+        return answer;                              // Возвращааепм ответ
+    }
+
+    /// <summary>
+    /// Находит элемент по его значению
+    /// </summary>
+    /// <param name="val">Значение элемента, которе нужно найти</param>
+    /// <returns>"YES", если элемент есть и "NO", если нет</returns>
+    string Find(int val) {
+        Node* tmp = first;                                      // Текущий элемент
+
+        while (tmp->val != val)                                 // Пока значение не рвно нужному
+        {
+            if (val > tmp->val && tmp->greater != nullptr)      // Если нужно сдвинуться впрво и там есть куда
+            {
+                tmp = tmp->greater;                             // Сдвигаемся
+            }
+            else if (val < tmp->val && tmp->less != nullptr)    // А если нужно сдвинуться влево и там есть куда
+            {
+                tmp = tmp->less;                                // Сдвигаемся
+            }
+            else {
+                return "NO";                                    // А если не можем сдвинуться, то пишем что такого элемента нет
+            }
+        }
+
+        return "YES";       // А если получилось найти, то пишем, что можем найти
+    }
+};
+
+
+int main()
+{
+    list lst;                                   // Объявляем структуру
+    int n;                                      // Количество комманд
+
+    cout << "Enter Number of commands: ";
+    cin >> n;                                   // Получаем количество комманд
+
+
+    vector<int> cmd1;                           // Создвем два вектора, в которые будем записывать входные данные
+    vector<int> cmd2;
+
+    for (int i = 0; i < n; i++)                 // Для каждой строки ввода
+    {
+        int input1, input2 = 0;                 // Две временные переменные, куда мы считываем две команды
+        cin >> input1;                          // Считываем первую команду
+
+        if (input1 > 2 || input1 < 0)           // Если команду не знаем, то выдаем ошибку
+        {
+            cout << "Unknown command";
+            return 1;
+        }
+
+        if (input1 != 1)                        // Если это не первая команда (где не нужно второе число)
+        {
+            cin >> input2;                      // Получаем второе число
+        }
+        
+        cmd1.push_back(input1);                 // Записываем в вектора команды
+        cmd2.push_back(input2);                 // Если команда под номером 1, то в cmd2 будет храниться число 0
+        
+    }
+
+    cout << endl;                               // Пропускаем строчку
+
+    for (int i = 0; i < n; i++)                 // Пробегаемся по всем командам
+    {
+        switch (cmd1[i])                        // Запускаем соответсвующие команды
+        {
+        case 0:
+            lst.Insert(cmd2[i]);
+            break;
+        case 1:
+            cout << lst.Extract() << endl;
+            break;
+        case 2:
+            cout << lst.Find(cmd2[i]) << endl;
+            break;
+        default:                                // А если не узнали команду, то выводим ошибку
+            cout << "Unknown command";
+            return 1;
+        }
+    }
+}
