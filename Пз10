@@ -33,13 +33,13 @@ struct list
 
 
     /// Добавляет элемент в дерево
-    /// <param name="val">Значение элемента</param>
+
     void Insert(int val) {
         Node* p = new Node(val);                    // Новый элемент
 
-        if (isEmpty())                              // Если дерево пустое
+        if (isEmpty())                             
         {
-            first = p;                              // Назначеаем первый элемент
+            first = p;                              
             return;
         }
 
@@ -67,10 +67,8 @@ struct list
         }
     }
 
-    /// <summary>
     /// Получить максимальный элемент дерева и удалить его
-    /// </summary>
-    /// <returns>Максимальный элемнт дерева</returns>
+
     int Extract() {
         int answer = 0;                             // Ответ
         Node* prev = first;                         // Предыдущий элемент
@@ -85,7 +83,7 @@ struct list
             return answer;                          // Возвращаем ответ
         }
 
-        while (tmp->greater != nullptr)             // Пока элемнт не макимальный
+        while (tmp->greater != nullptr)             // Пока элемент не макимальный
         {
             prev = tmp;                             // Сохраняем текущий элемент
             tmp = tmp->greater;                     // Берем больший элемент
@@ -96,24 +94,23 @@ struct list
         answer = tmp->val;                          // В ответ записываем значение максимального элемнта
         tmp = tmp->less;                            // На его мето ставим меньший элемнт (если он есть)
         prev->greater = tmp;                        // Ставим указатель на меньший элемент (теперь он больший)
-        return answer;                              // Возвращааепм ответ
+        return answer;                              
     }
 
-    /// <summary>
+
     /// Находит элемент по его значению
-    /// </summary>
-    /// <param name="val">Значение элемента, которе нужно найти</param>
-    /// <returns>"YES", если элемент есть и "NO", если нет</returns>
+
+
     string Find(int val) {
         Node* tmp = first;                                      // Текущий элемент
 
-        while (tmp->val != val)                                 // Пока значение не рвно нужному
+        while (tmp->val != val)                                 // Пока значение не равно нужному
         {
-            if (val > tmp->val && tmp->greater != nullptr)      // Если нужно сдвинуться впрво и там есть куда
+            if (val > tmp->val && tmp->greater != nullptr)      // Если нужно сдвинуться вправо и там есть куда
             {
                 tmp = tmp->greater;                             // Сдвигаемся
             }
-            else if (val < tmp->val && tmp->less != nullptr)    // А если нужно сдвинуться влево и там есть куда
+            else if (val < tmp->val && tmp->less != nullptr)    // Если нужно сдвинуться влево и там есть куда
             {
                 tmp = tmp->less;                                // Сдвигаемся
             }
@@ -129,28 +126,28 @@ struct list
 
 int main()
 {
-    list lst;                                   // Объявляем структуру
-    int n;                                      // Количество комманд
+    list lst;                                   
+    int n;                                     
 
-    cout << "Enter Number of commands: ";
+    cout << "Скок команд? ";
     cin >> n;                                   // Получаем количество комманд
 
 
-    vector<int> cmd1;                           // Создвем два вектора, в которые будем записывать входные данные
+    vector<int> cmd1;                           
     vector<int> cmd2;
 
-    for (int i = 0; i < n; i++)                 // Для каждой строки ввода
+    for (int i = 0; i < n; i++)                 
     {
-        int input1, input2 = 0;                 // Две временные переменные, куда мы считываем две команды
+        int input1, input2 = 0;                 
         cin >> input1;                          // Считываем первую команду
 
-        if (input1 > 2 || input1 < 0)           // Если команду не знаем, то выдаем ошибку
+        if (input1 > 2 || input1 < 0)           
         {
-            cout << "Unknown command";
+            cout << "ОТ 0 ДО 2";
             return 1;
         }
 
-        if (input1 != 1)                        // Если это не первая команда (где не нужно второе число)
+        if (input1 != 1)                       
         {
             cin >> input2;                      // Получаем второе число
         }
@@ -160,11 +157,11 @@ int main()
         
     }
 
-    cout << endl;                               // Пропускаем строчку
+    cout << endl;                      
 
-    for (int i = 0; i < n; i++)                 // Пробегаемся по всем командам
+    for (int i = 0; i < n; i++)                 
     {
-        switch (cmd1[i])                        // Запускаем соответсвующие команды
+        switch (cmd1[i])                        
         {
         case 0:
             lst.Insert(cmd2[i]);
@@ -175,8 +172,8 @@ int main()
         case 2:
             cout << lst.Find(cmd2[i]) << endl;
             break;
-        default:                                // А если не узнали команду, то выводим ошибку
-            cout << "Unknown command";
+        default:                                
+            cout << "Чо?";
             return 1;
         }
     }
