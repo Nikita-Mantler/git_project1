@@ -1,0 +1,228 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node
+{
+    int x, y;
+    node *next = nullptr;
+    node() : x(0), y(0) {}
+    node(int x, int y) : x(x), y(y) {}
+};
+class listik
+{
+    node *first;
+    void pushAndSort(int x, int y);
+
+public:
+    listik() : first(nullptr) {}
+    void push(int x, int y);
+    void pushRandom() {push(rand()%10, rand()%10);}
+    void print();
+    void clearListik();
+    double distanceBetweenFirstTwo();
+    void revomeByNumber(int n);
+    void change(int n, int x, int y);
+    void removeByValue(int x, int y);
+    void sorting();
+};
+
+int main()
+{
+    setlocale(0, "");
+
+    listik l;
+
+
+    int choice, x, y, n;
+    do {
+        system("cls");
+        cout << "\n\t1 - очистить список\n\t";
+        cout << "2 - добавить элемент\n\t";
+        cout << "3 - добавить случайный элемент\n\t";
+        cout << "4 - удалить элемент по номеру\n\t";
+        cout << "5 - удалить элемент по значению\n\t";
+        cout << "6 - заменить элемент\n\t";
+        cout << "7 - сортировка\n\t";
+        cout << "8 - вывод\n\n\t";
+        cout << "0 - до свидания\n\n\t";
+        cin >> choice;
+        switch(choice)
+        {
+            case 0: break;
+            case 1: l.clearListik();
+                    break;
+            case 2: system("cls");
+                    cout << "\n\tкоорды напиши плз => ";
+                    cin >> x >> y;
+                    l.push(x, y);
+                    break;
+            case 3: l.pushRandom();
+                    break;
+            case 4: system("cls");
+                    cout << "\n\tномер элемента (начинать с 1), который будет забанен => ";
+                    cin >> n;
+                    l.revomeByNumber(n-1);
+                    break;
+            case 5: system("cls");
+                    cout << "\n\tкоорды точки, которую надо забанить => ";
+                    cin >> x >> y;
+                    l.removeByValue(x, y);
+                    break;
+            case 6: system("cls");
+                    cout << "\n\tномер элемента (начинать с 1) и новое место жительства => ";
+                    cin >> n >> x >> y;
+                    l.change(n-1, x, y);
+                    break;
+            case 7: l.sorting();
+                    break;
+            case 8: cout << "\n\t";
+                    l.print();
+                    cin.get();
+                    cin.ignore();
+                    break;
+            default: choice = 1;
+        }
+    }while(choice != 0);
+
+    return 0;
+}
+
+void listik::push(int x, int y)
+{
+    node *n = new node(x, y);
+    if(!first) first = n;
+    else {
+        n->next = first;
+        first = n;
+    }
+}
+
+void listik::print()
+{
+    if(!first) {
+        return;
+    }
+    node *temp = first;
+    while(temp) {
+        cout << "(" << temp->x << ", " << temp->y << ")  ";
+        temp = temp->next;
+    }
+}
+
+void listik::clearListik()
+{
+    if(!first) return;
+    node *temp = first;
+    while(first) {
+        temp = first->next;
+        delete first;
+        first = temp;
+    }
+}
+
+double listik::distanceBetweenFirstTwo()
+{
+    if(!first || !first->next) return -1;
+    int x1, y1, x2, y2;
+    x1 = first->x;
+    y1 = first->y;
+    x2 = first->next->x;
+    y2 = first->next->y;
+    return sqrt((y1 - y2) * (y1 - y2) + (x1 - x2) * (x1 - x2));
+}
+
+void listik::revomeByNumber(int n)
+{
+    if(!first || n < 0) return;
+    node *current = first, *past = nullptr;
+    if(n == 0) {
+        first = first->next;
+        delete current;
+        return;
+    }
+    int k = 0;
+    while(k < n && current) {
+        past = current;
+        current = current->next;
+        k++;
+    }
+    if(current) {
+        past->next = current->next;
+        delete current;
+    }
+}
+
+void listik::change(int n, int x, int y)
+{
+    if(!first || n < 0) return;
+    node *temp = first;
+    while(temp && n--)
+        temp = temp->next;
+    if(temp) {
+        temp->x = x;
+        temp->y = y;
+    }
+}
+
+void listik::removeByValue(int x, int y)
+{
+    if(!first) return;
+    node *current = first, *past = nullptr;
+    if(first->x == x && first->y == y) {
+        first = first->next;
+        delete current;
+        return;
+    }
+    while(current && (current->x != x || current->y != y)) {
+        past = current;
+        current = current->next;
+    }
+    if(!current) return;
+    past->next = current->next;
+    delete current;
+}
+
+void listik::sorting()
+{
+    if(!first || !first->next) return;
+    listik *helper = new listik;
+    node *temp = first, *past = nullptr;
+    while(temp) {
+        helper->pushAndSort(temp->x, temp->y);
+        temp = temp->next;
+    }
+    clearListik();
+    temp = helper->first;
+    while(temp) {
+        past = temp;
+        push(temp->x, temp->y);
+        temp = temp->next;
+        delete past;
+    }
+    delete helper;
+}
+
+void listik::pushAndSort(int x, int y)
+{
+    if(!first) {
+        push(x, y);
+        return;
+    }
+    node *current = first, *past = nullptr;
+    node *n = new node(x, y);
+    if(x > first->x || x == first->x && y >= first->y) {
+        n->next = first;
+        first = n;
+        return;
+    }
+    while(current && x < current->x) {
+        past = current;
+        current = current->next;
+    }
+    while(current && x == current->x && y < current->y) {
+        past = current;
+        current = current->next;
+    }
+    past->next = n;
+    n->next = current;
+}
