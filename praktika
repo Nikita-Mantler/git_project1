@@ -1,0 +1,52 @@
+try:
+  file = open('txt.txt', 'r')
+  text = file.read().lower().split()
+  file.close()
+
+  if text == []:
+    print('Файл пуст. Напишите текст.')
+    
+  massb = []
+  massc = []
+  
+  for i in range(32):
+    massb.append(chr(1072+i))
+    massc.append(0)
+  
+  for i in range(len(text)):
+    for j in range(32):
+      amount = text[i].count(chr(1072+j))
+      massc[j] += amount
+      
+  vivod = []
+  flag = 1
+  
+  for i in range(len(massc)):
+    if flag == 0:
+      break
+    flag = 0
+    for j in range(len(massc)-1):
+      if massc[j]>massc[j+1]:
+        c = massc[j]
+        b = massb[j]      
+        
+        massc[j] = massc[j+1]
+        massc[j+1] = c 
+        
+        massb[j] = massb[j+1]
+        massb[j+1] = b
+  
+        flag = 1
+  
+  
+  flag = 0
+  for i in range(len(massb)):
+    if massc[i] != 0 :
+      flag = 1
+      print(massb[i], ' ', massc[i])
+      
+  if flag == 0:
+    print('В файле нет букв русского алфавита.')
+    
+except:
+  print('Файла не существует.')
