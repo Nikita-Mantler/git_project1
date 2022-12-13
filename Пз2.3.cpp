@@ -21,51 +21,48 @@ string generateRandomString(int length)
     return result;
 }
 
-/// @brief Returns the Hash code of the string by Horner's method
-/// @param str String you need a hash code for
-/// @return Hash code
-int getHashCodeHorner(string str) // Method to return the Horner Hash Code of a given string
+/// возвращаем Хэш методом Горнера
+int getHashCodeHorner(string str)
 {
-    int hashCode = 0;                      // Initial result is 0
-    for (int i = 0; i < str.length(); i++) // Loop through the string
+    int hashCode = 0;                     
+    for (int i = 0; i < str.length(); i++)
     {
-        hashCode = hashCode * 37 + (int)str[i]; // Multiply the result by 37 and add the ASCII value of the current letter
+        hashCode = hashCode * 37 + (int)str[i]; // Умножить результат на 37 и добавить аски значение текущей буквы
     }
-    return hashCode; // Return the final result
+    return hashCode;
 }
 
 int main()
 {
     srand(time(NULL));
 
-    // for lengts from 3 to 6
     for (int length = 3; length <= 6; length++)
     {
-        int collisionsByHash = 0;   // int to store the number of collisions by hash
-        int collisionsByString = 0; // int to store the number of collisions by string
+        int collisionsByHash = 0;   // храним значение коллизии
+        int collisionsByString = 0;
         int hashCodes[2000];        // int array to store the hashCodes of the 2000 random strings
         string strings[2000];       // string array to store the 2000 random strings
 
         // generate 2000 random strings
         for (int i = 0; i < 2000; i++)
         {
-            string str = generateRandomString(length); // generate a random string
-            hashCodes[i] = getHashCodeHorner(str);     // get the hashcode of the random string
-            strings[i] = str;                          // store the random string in the array
+            string str = generateRandomString(length);
+            hashCodes[i] = getHashCodeHorner(str);     // получаем хэш случ строчк
+            strings[i] = str;                          // сохранить случ строчк в список
         }
 
-        clock_t start = clock(); // initialize the clock
+        clock_t start = clock(); // времечко
 
-        for (int i = 0; i < 2000; i++) // iterate through the first 2000 strings
+        for (int i = 0; i < 2000; i++) // проходим по первым 2000 строчек
         {
-            for (int j = i + 1; j < 2000; j++) // iterate through the rest of the strings
+            for (int j = i + 1; j < 2000; j++) // проходим по остальным
             {
-                if (strings[i] == strings[j]) // compare the strings
-                    collisionsByString++;     // increment the collision counter
+                if (strings[i] == strings[j]) // сравниваем
+                    collisionsByString++;     // +1 счётчику коллизии
             }
         }
-        clock_t end = clock();                                        // set the stop time
-        double timeByString = (double)(end - start) / CLOCKS_PER_SEC; // calculate the time elapsed
+        clock_t end = clock();                                        // стоп времечк
+        double timeByString = (double)(end - start) / CLOCKS_PER_SEC;
 
         // count collisions by hash
         start = clock();
