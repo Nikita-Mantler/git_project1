@@ -3,27 +3,21 @@
 
 using namespace std;
 
-/// @brief Generates string with random numbers and letters given length
-/// @param length The length of string
-/// @return The generated string
+/// Строка с рандом значениями
+/// длина строчк
+// ретëрн строка
 string generateRandomString(int length)
 {
-    // Create a string to store the result
     string result = "";
-    // Loop for each character we want to generate
+    // цикл для каждого символа, который хотим вставить
     for (int i = 0; i < length; i++)
     {
-        // Get a random number between 0 and 35
         int random = rand() % 36;
-        // If the number is less than 10, then it is a number
         if (random < 10)
-            // Append the number to the result string
             result += (char)(random + 48);
         else
-            // Otherwise, append the letter to the result string
             result += (char)(random + 87);
     }
-    // Return the result string
     return result;
 }
 
