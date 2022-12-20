@@ -2,22 +2,22 @@
 
 using namespace std;
 
-// class of bidirectional list
+// класс спис очка
 class List
 {
 private:
     struct Node
     {
-        int id;             // the id of the node
-        int data;           // the data of the node
-        int accesCount = 0; // the amount of times the node has been accessed
-        Node *next;         // the next node in the list
-        Node *prev;         // the previous node in the list
+        int id;             // айдишник
+        int data;       
+        int accesCount = 0; // кол-во обращений
+        Node *next;        
+        Node *prev;     
     };
-    Node *head;        // The head of the doubly-linked list
-    Node *tail;        // The tail of the doubly-linked list
-    int size;          // The number of nodes in the list
-    int currentId = 0; // The current ID to give a new node
+    Node *head;       
+    Node *tail;      
+    int size;          // кол-во узлов
+    int currentId = 0; // айди который даём узелку
 
 public:
     List()
@@ -37,64 +37,51 @@ public:
         }
     }
 
-    /// @brief Get node data by its id
-    /// @param id id of the element
-    /// @return data
+    // смотрим инфу по айди
+    //возвращаем инфу собстна
     int getbyid(int id)
     {
-        // if the id is less than 0, throw an error
         if (id < 0)
         {
             throw "ID cannot be less than 0";
         }
 
-        // declare a pointer to a Node and set it equal to head
+        // объявить указатель на узел и установить его равным головному
         Node *temp = head;
-        // while the pointer to a Node is not null
         while (temp != NULL)
         {
-            // if the id of the Node is equal to the parameter
+            // если айди узла равен параметру
             if (temp->id == id)
             {
-                // increment the accessCount of the Node
+                // +1 в копилку обращений
                 temp->accesCount++;
-                // return the data of the Node
                 return temp->data;
             }
-            // set the pointer to a Node equal to the next Node
+            // указатель на след узел
             temp = temp->next;
         }
-        // if nothing is found, return -1
+        // если ниче нет, тогда да
         return -1;
     }
 
-    /// @brief Get node data by its positon in the list
-    /// @param pos position of the element
-    /// @return data
+    // хочу данные узла по его положению в списке
+    // возвращаю данные...
     int getbypos(int pos)
     {
-        // declare a pointer to a Node and set it equal to head
         Node *temp = head;
-        // while the pointer to a Node is not null
         for (int i = 0; i != pos + 1; i++)
         {
-            // if the id of the Node is equal to the parameter
             if (i == pos)
             {
-                // increment the accessCount of the Node
                 temp->accesCount++;
-                // return the data of the Node
                 return temp->data;
             }
-            // set the pointer to a Node equal to the next Node
             temp = temp->next;
         }
-        // if nothing is found, return -1
         return -1;
     }
 
-    /// @brief Ads the element to the end of the list
-    /// @param data element value
+    // добавление эл-та в конец списка
     void push_back(int data)
     {
         Node *temp = new Node;
@@ -112,8 +99,7 @@ public:
         sort();
     }
 
-    /// @brief Ads the element to the start of the list
-    /// @param data element value
+    // добавление эл-та в начало
     void push_front(int data)
     {
         Node *temp = new Node;
@@ -130,7 +116,7 @@ public:
         currentId++;
     }
 
-    /// @brief Removes the element from the end of the list
+    // убрать эл-нт из конца списка
     void pop_back()
     {
         if (tail != NULL)
@@ -146,7 +132,7 @@ public:
         }
     }
 
-    /// @brief Removes the element from the start of the list
+    // и из начала
     void pop_front()
     {
         if (head != NULL)
@@ -162,9 +148,7 @@ public:
         }
     }
 
-    /// @brief Insert the element to a given position
-    /// @param index where to insert the elemet
-    /// @param data value of the element
+    // послать эл-нт в известное место
     void insert(int index, int data)
     {
         if (index < 0 || index > size)
@@ -193,32 +177,29 @@ public:
         currentId++;
     }
 
-    /// @brief Removes the element from a given position
-    /// @param index where to remove the element
+    // выкорчевать эл-нт из конкретного места
     void eraseElem(int index)
     {
         if (index < 0 || index >= size)
             return;
-        if (index == 0) // if index is 0, delete the first element
+        if (index == 0)
         {
             pop_front();
             return;
         }
-        if (index == size - 1) // if index is last element, delete it
+        if (index == size - 1)
         {
             pop_back();
             return;
         }
-        Node *temp = head;              // create a temp Node
-        for (int i = 0; i < index; i++) // iterate through the list until you reach the index
+        Node *temp = head;
+        for (int i = 0; i < index; i++)
             temp = temp->next;
-        temp->prev->next = temp->next; // link the previous to the next
-        temp->next->prev = temp->prev; // link the next to the previous
-        delete temp;                   // delete the node at the index
-        size--;                        // decrease the size
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        delete temp;                   
+        size--;                       
     }
-
-    // print the list in format: id accesCount data
     void print()
     {
         Node *temp = head;
@@ -230,7 +211,7 @@ public:
         }
     }
 
-    // sort the list based on accesCount
+    // сортируем список по кол-ву обращений
     void sort()
     {
         Node *temp = head;
@@ -261,9 +242,7 @@ public:
 
 int main()
 {
-    // create a list
     List list;
-    // add elements to the list
     list.push_back(1);
     list.push_back(2);
     list.push_back(3);
