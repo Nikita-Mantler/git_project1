@@ -9,33 +9,30 @@ using namespace std;
 
 void mapFunc()
 {
-    // Create a map to store the string counts
+    // строим мапу чтоб хранить количество строк
     map<string, int> counts;
 
-    // Read the input string
     string input;
     getline(cin, input);
-
-    // Split the input string into individual words
+    
+    // делим строку по словам
     string word;
     for (const auto &c : input)
     {
         if (c == ' ')
         {
-            // Add the word to the map
+            // добавить слово в мапу
             ++counts[word];
 
-            // Clear the word
+            // убрать слово
             word.clear();
         }
         else
         {
-            // Add the character to the word
+            // добавить буковку слову
             word += c;
         }
     }
-
-    // Print the count for each word
     for (const auto &words : counts)
     {
         cout << words.first << ": " << words.second << endl;
@@ -44,18 +41,17 @@ void mapFunc()
 
 void vectorFunc()
 {
-    // random seed
     srand(time(NULL));
-    // Read the sizes of the two vectors
+    // задать размер векторам
     int size1, size2;
     cin >> size1 >> size2;
 
-    // Create the two vectors and fill them with random numbers between -100 and 100
+    // сделать два вектора и случайными числами заполнить их
     vector<int> vec1(size1), vec2(size2);
     generate(vec1.begin(), vec1.end(), []() { return rand() % 201 - 100; });
     generate(vec2.begin(), vec2.end(), []() { return rand() % 201 - 100; });
 
-    // Output the contents of the two vectors
+    // показать
     cout << "Vector 1:";
     for (const auto &x : vec1)
         cout << ' ' << x;
@@ -66,7 +62,7 @@ void vectorFunc()
         cout << ' ' << x;
     cout << '\n';
 
-    // Find the arithmetic mean of the elements of each vector
+    // сыр знач
     double mean1 = 0, mean2 = 0;
     for (const auto &x : vec1)
         mean1 += x;
@@ -79,7 +75,7 @@ void vectorFunc()
     cout << "Mean of vector 1: " << mean1 << '\n';
     cout << "Mean of vector 2: " << mean2 << '\n';
 
-    // Find the intersecting elements of the two vectors
+    // коллизия
     vector<int> intersect;
     set_intersection(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(),
                           back_inserter(intersect));
@@ -90,12 +86,12 @@ void vectorFunc()
     cout << '\n';
 }
 
+// ГРАФ
 void graphFunc()
 {
-    // N - number of vertices
+    // кол-во вершин
     int N;
     cin >> N;
-    // remove the newline character
     cin.ignore();
 
     vector<vector<int>> graph(N);
