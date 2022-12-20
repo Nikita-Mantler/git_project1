@@ -1,118 +1,60 @@
 #include <iostream>
 #include <map>
-#include <string>
-#include <algorithm>
 #include <vector>
-#include <sstream>
 
-using namespace std;
-
-void mapFunc()
+void result(std::map<std::string, int>& count_words)
 {
-    // строим мапу чтоб хранить количество строк
-    map<string, int> counts;
+	std::map <std::string,int> :: iterator it;
+	it = count_words.begin();
 
-    string input;
-    getline(cin, input);
-    
-    // делим строку по словам
-    string word;
-    for (const auto &c : input)
-    {
-        if (c == ' ')
-        {
-            // добавить слово в мапу
-            ++counts[word];
-
-            // убрать слово
-            word.clear();
-        }
-        else
-        {
-            // добавить буковку слову
-            word += c;
-        }
-    }
-    for (const auto &words : counts)
-    {
-        cout << words.first << ": " << words.second << endl;
-    }
+	while(it != count_words.end())
+	{
+		std::cout << '\n' << it->first << ' ' << it->second << '\n';
+		++it;
+	}
 }
 
-void vectorFunc()
+void find_new_string(std::string sentence, std::map<std::string, int>& count_words)
 {
-    srand(time(NULL));
-    // задать размер векторам
-    int size1, size2;
-    cin >> size1 >> size2;
+	std::string word;
+	std::map<std::string, int> :: iterator it;
 
-    // сделать два вектора и случайными числами заполнить их
-    vector<int> vec1(size1), vec2(size2);
-    generate(vec1.begin(), vec1.end(), []() { return rand() % 201 - 100; });
-    generate(vec2.begin(), vec2.end(), []() { return rand() % 201 - 100; });
+	for (unsigned int i = 0; i < sentence.size(); ++i)
+	{
+		if (sentence[i] != ' ' && sentence[i] != '.' && sentence[i] != ';' && sentence[i] != ':' && sentence[i] != '\0')
+		{
+			while (sentence[i] != ' ' && sentence[i] != '.' && sentence[i] != ';' && sentence[i] != ':' && sentence[i] != '\0')
+			{
+				word.push_back(tolower(sentence[i]));
+				++i;
+			}
 
-    // показать
-    cout << "Vector 1:";
-    for (const auto &x : vec1)
-        cout << ' ' << x;
-    cout << '\n';
+			it = count_words.find(word);
 
-    cout << "Vector 2:";
-    for (const auto &x : vec2)
-        cout << ' ' << x;
-    cout << '\n';
+			if(it == count_words.end())
+			{
+				count_words[word] = 1;
+			} 
+			else
+			{
+				it->second++; 
+			}
+		}
 
-    // сыр знач
-    double mean1 = 0, mean2 = 0;
-    for (const auto &x : vec1)
-        mean1 += x;
-    mean1 /= vec1.size();
-
-    for (const auto &x : vec2)
-        mean2 += x;
-    mean2 /= vec2.size();
-
-    cout << "Mean of vector 1: " << mean1 << '\n';
-    cout << "Mean of vector 2: " << mean2 << '\n';
-
-    // коллизия
-    vector<int> intersect;
-    set_intersection(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(),
-                          back_inserter(intersect));
-
-    cout << "Intersecting elements:";
-    for (const auto &x : intersect)
-        cout << ' ' << x;
-    cout << '\n';
+		word.clear();
+	}
 }
 
-// ГРАФ
-void graphFunc()
-{
-    // кол-во вершин
-    int N;
-    cin >> N;
-    cin.ignore();
-
-    vector<vector<int>> graph(N);
-    for (int i = 0; i < N; i++)
-    {
-        string line;
-        getline(cin, line);
-        istringstream iss(line);
-
-        int num;
-        while (iss >> num)
-        {
-            graph[i].push_back(num);
-        }
-    }
-}
 
 int main()
 {
-    mapFunc();
-    vectorFunc();
-    graphFunc();
-    return 0;
+	std::map<std::string, int> count_words;
+	std::string sentence;
+
+	std::getline(std::cin, sentence);
+
+	find_new_string(sentence, count_words);
+	result(count_words);
+
+	return 0;
 }
