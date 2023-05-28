@@ -1,5 +1,0 @@
-def main():
-    print('my first program')
-    print('aeeee')
-if __name__=='__main__':
-    main()
