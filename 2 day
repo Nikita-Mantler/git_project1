@@ -1,0 +1,26 @@
+from kivy.app import App
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.anchorlayout import AnchorLayout
+
+# class MyApp(App):
+#     def build(self):
+#         bl = GridLayout(cols = 4, padding = 50, spacing = 3)
+#
+#         bl.add_widget(Button(text = "1"))
+#         bl.add_widget(Button(text = "2"))
+#         bl.add_widget(Button(text = "3"))
+#         bl.add_widget(Button(text = "4"))
+#         bl.add_widget(Button(text = "5"))
+#         return bl
+
+class MyApp(App):
+    def build(self):
+        a = AnchorLayout(anchor_x = 'right', anchor_y = 'bottom')
+
+        a.add_widget(Button(text = "1"))
+
+if __name__ == '__main__':
+    MyApp().run()
+
