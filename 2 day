@@ -115,13 +115,16 @@ KV File:
     rows: 3
     padding: 50
     
-    TextInput:
-    
     Label:
-    
+        text: 'CALCULATOOOOR'
+        font_size: 40
+    TextInput:
+        size_hint: 1, 0.3
+        multiline: False
+        font_size: 40
     Button:
-        text: ''
-        size_hint:
+        text: 'Knopochka'
+        size_hint: 1, 0.3
         
 
 
