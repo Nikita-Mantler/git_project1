@@ -20,7 +20,110 @@ class MyApp(App):
         a = AnchorLayout(anchor_x = 'right', anchor_y = 'bottom')
 
         a.add_widget(Button(text = "1"))
+        
+    
 
 if __name__ == '__main__':
     MyApp().run()
 
+
+
+
+
+
+#from kivy.app import App
+#from kivy.uix.button import Button
+#from kivy.uix.boxlayout import BoxLayout
+
+#class MyApp(App):
+    #def build(self):
+        #self.count = 0
+        #return Button(
+            #text = "Моя первая кнопкаааа",
+            #font_size = 30,
+            #on_press = self.btn_press,
+            #background_color = [0.32, 0.85, 0.94, 1],
+            #background_normal = '')
+    
+    #def btn_press(self, instance):
+        #print('кнопка нажата!')
+        #self.count += 1
+        #instance.text = 'Я нажата! ' + str(self.count) + ' раз'
+        
+
+#if __name__ == '__main__':
+    #MyApp().run()    
+    
+    
+    
+Начинаем работать с KV:
+1. boxlayout:
+
+
+Питоновский файл:
+
+from kivy.app import App
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+
+class Container(BoxLayout):
+    pass
+class MyApp(App):
+    def build(self):
+        return Container()
+        
+if __name__ == '__main__':
+    MyApp().run()
+
+KV FILE!!!!
+#size
+#size_hint
+<Container>:
+    orientation: 'vertical/horizontal'
+    padding: 50 # расстояние от рамок родителя до содержимого
+    spacing: 50 # расст между содержимым
+    Button:
+        text: "Hello"
+        #size_hint: 1, 0.5 #в процентах по горизонтали и вертикали относительно родителя
+        #pos_hint: {'center_x': 0.2, 'center_y': 0.2}
+    Button:
+        text: "World"
+        #pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        
+
+
+2. GridLayout
+Питоновский файл:
+
+from kivy.app import App
+from kivy.uix.button import Button
+from kivy.uix.gridlayout import GridLayout
+
+class Container(GridLayout):
+    pass
+class MyApp(App):
+    def build(self):
+        return Container()
+        
+if __name__ == '__main__':
+    MyApp().run()
+    
+    
+KV File:
+
+<Container>:
+    rows: 3
+    padding: 50
+    
+    TextInput:
+    
+    Label:
+    
+    Button:
+        text: ''
+        size_hint:
+        
+
+
+
+  
