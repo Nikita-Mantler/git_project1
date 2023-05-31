@@ -1,67 +1,115 @@
-import kivy
-kivy.require("1.11.1")
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.properties import ObjectProperty
+import math
+class MainContainer(GridLayout):
+    entry_calc = ObjectProperty()
+    x1 = None
+    y1 = None
+    rounding = None
+    def delete(self, value):
+        if value:
+            self.entry_calc.text = self.entry_calc.text[:len(self.entry_calc.text)-1]
 
-class Main(BoxLayout):
-	value1 = None
-	value2 = None
-	operation = None
-	def set_value(self, value):
-		self.ids.operation.text += value
-	def add(self):
-		self.operation = "+"
-		self.checkOp()
-	def sub(self):
-		self.operation = "-"
-		self.checkOp()
-	def mul(self):
-		self.operation = "*"
-		self.checkOp()
-	def div(self):
-		self.operation = "/"
-		self.checkOp()
-	def delete(self):
-		temp = len(self.ids.operation.text)
-		self.ids.operation.text = self.ids.operation.text[:temp - 1]
-	def clear(self):
-		self.ids.operation.text = ""
-		self.value1 = None
-		self.value2 = None
-		self.operation = None
-	def equal(self):
-		if self.value1 != None and self.operation != None:
-			result = None
-			if self.operation == "+":
-				self.value2 = float(self.ids.operation.text)
-				result = self.value1 + self.value2
-			if self.operation == "-":
-				self.value2 = float(self.ids.operation.text)
-				result = self.value1 - self.value2
-			if self.operation == "*":
-				self.value2 = float(self.ids.operation.text)
-				result = self.value1 * self.value2
-			if self.operation == "/":
-				self.value2 = float(self.ids.operation.text)
-				result = self.value1 / self.value2
-			self.ids.operation.text = str(result)
-			self.value1 = None #result
-			self.value2 = None
-			self.operation = None
-	def checkOp(self):
-		try:
-			if self.value1 == None:
-				self.value1 = float(self.ids.operation.text)
-				self.ids.operation.text = ""
-			elif self.operation != None:
-				self.equal()
-		except:
-			pass
+    def square(self, value):
+        if value:
+            self.entry_calc.text = str(float(self.entry_calc.text)**2)
+
+    def power(self, value):
+        if value:
+            try:
+                self.x1 = self.entry_calc.text
+                self.entry_calc.text += '^'
+            except Exception:
+                self.entry_calc.text += ""
+
+    def sin(self, value):
+        if value:
+            self.entry_calc.text = str(math.sin(math.degrees(float(self.entry_calc.text))))
+
+    def cos(self, value):
+        if value:
+            self.entry_calc.text = str(math.cos(math.degrees(float(self.entry_calc.text))))
+
+    def tan(self, value):
+        if value:
+            self.entry_calc.text = str(math.tan(math.degrees(float(self.entry_calc.text))))
+
+    def ten_power(self, value):
+        if value:
+            self.entry_calc.text = str(10**float(self.entry_calc.text))
+
+    def sub(self, value):
+        if value:
+            try:
+                self.x1 = self.entry_calc.text
+                self.entry_calc.text += '÷'
+            except Exception:
+                self.entry_calc.text += ""
+
+    def Mod(self, value):
+        if value:
+            try:
+                self.x1 = self.entry_calc.text
+                self.entry_calc.text += 'Mod'
+            except Exception:
+                self.entry_calc.text += ""
+
+    def fact(self, value):
+        if value:
+            self.entry_calc.text = str(math.factorial(int(self.entry_calc.text)))
+
+    def square_root(self, value):
+        if value:
+            self.entry_calc.text = str(math.sqrt(float(self.entry_calc.text)))
+    def Up(self, value):
+        if value:
+            try:
+                if '.' in self.entry_calc.text:
+                    if int(self.entry_calc.text[-1]) >= 5:
+                        self.entry_calc.text = self.entry_calc.text[:len(self.entry_calc.text) - 1]
+                        self.rounding = int(self.entry_calc.text[-1])
+                        self.rounding += 1
+                        self.entry_calc.text = self.entry_calc.text[:len(self.entry_calc.text) - 1]
+                        self.entry_calc.text += str(self.rounding)
+                    else:
+                        self.entry_calc.text = self.entry_calc.text[:len(self.entry_calc.text) - 1]
+            except Exception:
+                pass
+
+    def upsidedown(self, value):
+        if value:
+            if self.entry_calc.text[0] != '-':
+                minus = '-'
+                minus += self.entry_calc.text
+            # else:
+            #     self.entry_calc.text
+
+    def log(self, value):
+        if value:
+            self.entry_calc.text = str(float(math.log(float(self.entry_calc.text), 10)))
+
+    def equal(self, value):
+        if value:
+            try:
+                if '^' in self.entry_calc.text:
+                    self.y1 = self.entry_calc.text[len(self.x1)+1:]
+                    self.entry_calc.text = str(float(self.x1)**float(self.y1))
+                elif '÷' in self.entry_calc.text:
+                    self.y1 = self.entry_calc.text[len(self.x1)+1:]
+                    self.entry_calc.text = str(float(self.x1)//float(self.y1))
+                elif 'Mod' in self.entry_calc.text:
+                    self.y1 = self.entry_calc.text[len(self.x1)+3:]
+                    self.entry_calc.text = str(float(self.x1)%float(self.y1))
+                else:
+                    self.entry_calc.text = str(eval(self.entry_calc.text))
+            except Exception:
+                self.entry_calc.text = "Error"
 
 class MainApp(App):
-	title = "Kivy Calculator"
-	def build(self):
-		return Main()
+    def build(self):
+        return MainContainer()
 
 if __name__ == '__main__':
     MainApp().run()
+
