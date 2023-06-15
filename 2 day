@@ -27,8 +27,8 @@ if __name__ == '__main__':
 <MainWidget>:
     id: calc
     rows: 5
-    spacing: 5
-    padding: 5
+    spacing: 10
+    padding: 10
     canvas.before:
         Color:
             rgba: [0.4, 0.7, 0.7, 0.8]
