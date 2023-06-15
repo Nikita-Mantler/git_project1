@@ -1,131 +1,101 @@
+Python file
 from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.anchorlayout import AnchorLayout
+from kivy.properties import ObjectProperty
+class MainWidget(GridLayout):
+    entry_calc = ObjectProperty()
+    def equal(self):
+        self.entry_calc.text = str(eval(self.entry_calc.text))
 
-# class MyApp(App):
-#     def build(self):
-#         bl = GridLayout(cols = 4, padding = 50, spacing = 3)
-#
-#         bl.add_widget(Button(text = "1"))
-#         bl.add_widget(Button(text = "2"))
-#         bl.add_widget(Button(text = "3"))
-#         bl.add_widget(Button(text = "4"))
-#         bl.add_widget(Button(text = "5"))
-#         return bl
 
-class MyApp(App):
+class MainApp(App):
     def build(self):
-        a = AnchorLayout(anchor_x = 'right', anchor_y = 'bottom')
+        return MainWidget()
 
-        a.add_widget(Button(text = "1"))
-        
-    
 
 if __name__ == '__main__':
-    MyApp().run()
+    app = MainApp()
+    app.run()
 
 
 
 
 
+<CustB@Button>:
+    font_size: 32
 
-#from kivy.app import App
-#from kivy.uix.button import Button
-#from kivy.uix.boxlayout import BoxLayout
+<MainWidget>:
+    id: calc
+    rows: 5
+    spacing: 5
+    padding: 5
+    canvas.before:
+        Color:
+            rgba: [0.4, 0.7, 0.7, 0.8]
+        Rectangle:
+            size: self.size
+            pos: self.pos
 
-#class MyApp(App):
-    #def build(self):
-        #self.count = 0
-        #return Button(
-            #text = "Моя первая кнопкаааа",
-            #font_size = 30,
-            #on_press = self.btn_press,
-            #background_color = [0.32, 0.85, 0.94, 1],
-            #background_normal = '')
-    
-    #def btn_press(self, instance):
-        #print('кнопка нажата!')
-        #self.count += 1
-        #instance.text = 'Я нажата! ' + str(self.count) + ' раз'
-        
+    entry_calc: entry
 
-#if __name__ == '__main__':
-    #MyApp().run()    
-    
-    
-    
-Начинаем работать с KV:
-1. boxlayout:
-
-
-Питоновский файл:
-
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
-
-class Container(BoxLayout):
-    pass
-class MyApp(App):
-    def build(self):
-        return Container()
-        
-if __name__ == '__main__':
-    MyApp().run()
-
-KV FILE!!!!
-#size
-#size_hint
-<Container>:
-    orientation: 'vertical/horizontal'
-    padding: 50 # расстояние от рамок родителя до содержимого
-    spacing: 50 # расст между содержимым
-    Button:
-        text: "Hello"
-        #size_hint: 1, 0.5 #в процентах по горизонтали и вертикали относительно родителя
-        #pos_hint: {'center_x': 0.2, 'center_y': 0.2}
-    Button:
-        text: "World"
-        #pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-        
-
-
-2. GridLayout
-Питоновский файл:
-
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.gridlayout import GridLayout
-
-class Container(GridLayout):
-    pass
-class MyApp(App):
-    def build(self):
-        return Container()
-        
-if __name__ == '__main__':
-    MyApp().run()
-    
-    
-KV File:
-
-<Container>:
-    rows: 3
-    padding: 50
-    
-    Label:
-        text: 'CALCULATOOOOR'
-        font_size: 40
-    TextInput:
-        size_hint: 1, 0.3
-        multiline: False
-        font_size: 40
-    Button:
-        text: 'Knopochka'
-        size_hint: 1, 0.3
-        
+    BoxLayout:
+        TextInput:
+            id: entry
+            font_size: 60
+            halign: 'right'
+            multiline: False
+    BoxLayout:
+        CustB:
+            text: '7'
+            on_press: entry.text += self.text
+        CustB:
+            text: '8'
+            on_press: entry.text += self.text
+        CustB:
+            text: '9'
+            on_press: entry.text += self.text
+        CustB:
+            text: '*'
+            on_press: entry.text += self.text
+    BoxLayout:
+        CustB:
+            text: '4'
+            on_press: entry.text += self.text
+        CustB:
+            text: '5'
+            on_press: entry.text += self.text
+        CustB:
+            text: '6'
+            on_press: entry.text += self.text
+        CustB:
+            text: '/'
+            on_press: entry.text += self.text
+    BoxLayout:
+        CustB:
+            text: '1'
+            on_press: entry.text += self.text
+        CustB:
+            text: '2'
+            on_press: entry.text += self.text
+        CustB:
+            text: '3'
+            on_press: entry.text += self.text
+        CustB:
+            text: '+'
+            on_press: entry.text += self.text
+    BoxLayout:
+        CustB:
+            text: 'C'
+            on_press: entry.text = ''
+        CustB:
+            text: '0'
+            on_press: entry.text += self.text
+        CustB:
+            text: '='
+            on_press: root.equal()
+        CustB:
+            text: '-'
+            on_press: entry.text += self.text
 
 
 
