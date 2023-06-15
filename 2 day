@@ -39,11 +39,12 @@ if __name__ == '__main__':
     entry_calc: entry
 
     BoxLayout:
-        TextInput:
+        Label:
             id: entry
-            font_size: 60
-            halign: 'right'
-            multiline: False
+            text: ""
+            font_size: 32
+            multiline: False 
+            color: 1, 1, 1, 1
     BoxLayout:
         CustB:
             text: '7'
